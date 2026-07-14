@@ -320,6 +320,7 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
 
         // Get ETH balance directly from RPC
         const directBalance = await getEthBalanceDirectly(account)
+        setETHBalance(directBalance)
         console.log("Updated ETH balance:", directBalance)
 
         // Get dETH balance if contract is available
@@ -327,9 +328,11 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
           try {
             const dETH = new ethers.Contract(DETH_ADDRESS, dETHAbi, provider)
             const dETHBal = await dETH.balanceOf(account)
+            setDETHBalance(ethers.formatEther(dETHBal))
             console.log("Updated dETH balance:", ethers.formatEther(dETHBal))
           } catch (error) {
             console.error("Error refreshing dETH balance:", error)
+            setDETHBalance(null)
           }
         }
 
@@ -338,9 +341,11 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
           try {
             const sETH = new ethers.Contract(SETH_ADDRESS, sETHAbi, provider)
             const sETHBal = await sETH.balanceOf(account)
+            setSETHBalance(ethers.formatEther(sETHBal))
             console.log("Updated sETH balance:", ethers.formatEther(sETHBal))
           } catch (error) {
             console.error("Error refreshing sETH balance:", error)
+            setSETHBalance(null)
           }
         }
       } catch (error) {
