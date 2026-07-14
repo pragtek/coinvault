@@ -1,1 +1,4 @@
+# Ignore all .env files everywhere in the repository
+**/*.env*
+
 node_modules
